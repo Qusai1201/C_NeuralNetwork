@@ -1,0 +1,4 @@
+LR = 0.01
+Score: 0.96110 - leakyRelu
+Score: 0.95960 - relu
+Score: 0.91550 - sigmoid
