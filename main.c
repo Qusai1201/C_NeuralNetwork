@@ -34,8 +34,12 @@ void train_test()
 int main()
 {
     srand(time(NULL));
+	Img **test_imgs = csv_to_imgs("data/mnist_test.csv", number_test_imgs);
+	for (size_t i = 0; i < number_test_imgs; i++)
+	{
+		img_print(test_imgs[i]);
+	}
 	
-    train_test();
 
     return 0;
 }
