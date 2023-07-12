@@ -15,6 +15,32 @@ double leakeyRelu(double input)
 {
 	return (input > 0) ? input : ALPHA * input;
 }
+double logistic(double input) {
+    return 1.0 / (1.0 + exp(-input));
+}
+double tanh(double input) {
+    return tanh(input);
+}
+
+Matrix* logisticPrime(Matrix* m) {
+    Matrix* mat = matrix_create(m->rows, m->cols);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            mat->entries[i][j] = logistic(m->entries[i][j]);
+        }
+    }
+    return mat;
+}
+
+Matrix* tanhPrime(Matrix* m) {
+    Matrix* mat = matrix_create(m->rows, m->cols);
+    for (int i = 0; i < m->rows; i++) {
+        for (int j = 0; j < m->cols; j++) {
+            mat->entries[i][j] = tanh(m->entries[i][j]);
+        }
+    }
+    return mat;
+}
 
 Matrix* leakeyReluPrime(Matrix* m)
 {
