@@ -5,8 +5,8 @@
 
 #define MAXCHAR 100
 
-Matrix* matrix_create(int row, int col) {
-	Matrix *matrix = malloc(sizeof(Matrix));
+matrix* matrix_create(int row, int col) {
+	matrix *matrix = malloc(sizeof(matrix));
 	matrix->rows = row;
 	matrix->cols = col;
 	matrix->entries = malloc(row * sizeof(double*));
@@ -16,7 +16,7 @@ Matrix* matrix_create(int row, int col) {
 	return matrix;
 }
 
-void matrix_fill(Matrix *m, int n) {
+void matrix_fill(matrix *m, int n) {
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
 			m->entries[i][j] = n;
@@ -24,7 +24,7 @@ void matrix_fill(Matrix *m, int n) {
 	}
 }
 
-void matrix_free(Matrix *m) {
+void matrix_free(matrix *m) {
 	for (int i = 0; i < m->rows; i++) {
 		free(m->entries[i]);
 	}
@@ -33,7 +33,7 @@ void matrix_free(Matrix *m) {
 	m = NULL;
 }
 
-void matrix_print(Matrix* m) {
+void matrix_print(matrix* m) {
 	printf("Rows: %d Columns: %d\n", m->rows, m->cols);
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
@@ -43,8 +43,8 @@ void matrix_print(Matrix* m) {
 	}
 }
 
-Matrix* matrix_copy(Matrix* m) {
-	Matrix* mat = matrix_create(m->rows, m->cols);
+matrix* matrix_copy(matrix* m) {
+	matrix* mat = matrix_create(m->rows, m->cols);
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
 			mat->entries[i][j] = m->entries[i][j];
@@ -53,7 +53,7 @@ Matrix* matrix_copy(Matrix* m) {
 	return mat;
 }
 
-void matrix_save(Matrix* m, char* file_string) {
+void matrix_save(matrix* m, char* file_string) {
 	FILE* file = fopen(file_string, "w");
 	fprintf(file, "%d\n", m->rows);
 	fprintf(file, "%d\n", m->cols);
@@ -66,14 +66,14 @@ void matrix_save(Matrix* m, char* file_string) {
 	fclose(file);
 }
 
-Matrix* matrix_load(char* file_string) {
+matrix* matrix_load(char* file_string) {
 	FILE* file = fopen(file_string, "r");
 	char entry[MAXCHAR]; 
 	fgets(entry, MAXCHAR, file);
 	int rows = atoi(entry);
 	fgets(entry, MAXCHAR, file);
 	int cols = atoi(entry);
-	Matrix* m = matrix_create(rows, cols);
+	matrix* m = matrix_create(rows, cols);
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
 			fgets(entry, MAXCHAR, file);
@@ -92,7 +92,7 @@ double uniform_distribution(double low, double high) {
 	return low + (1.0 * (rand() % scaled_difference) / scale);
 }
 
-void matrix_randomize(Matrix* m, int n) {
+void matrix_randomize(matrix* m, int n) {
 	// Pulling from a random distribution of 
 	// Min: -1 / sqrt(n)
 	// Max: 1 / sqrt(n)
@@ -105,7 +105,7 @@ void matrix_randomize(Matrix* m, int n) {
 	}
 }
 
-int matrix_argmax(Matrix* m) {
+int matrix_argmax(matrix* m) {
 	// Expects a Mx1 matrix
 	double max_score = 0;
 	int max_idx = 0;
@@ -118,9 +118,9 @@ int matrix_argmax(Matrix* m) {
 	return max_idx;
 }
 
-Matrix* matrix_flatten(Matrix* m, int axis) {
+matrix* matrix_flatten(matrix* m, int axis) {
 	// Axis = 0 -> Column Vector, Axis = 1 -> Row Vector
-	Matrix* mat;
+	matrix* mat;
 	if (axis == 0) {
 		mat = matrix_create(m->rows * m->cols, 1);
 	} else if (axis == 1) {

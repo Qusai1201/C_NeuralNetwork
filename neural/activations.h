@@ -5,18 +5,18 @@
 #define ALPHA 0.01
 
 double sigmoid(double input);
-Matrix* sigmoidPrime(Matrix* m);
+matrix* sigmoidPrime(matrix* m);
 
 double relu(double input);
-Matrix* reluPrime(Matrix* m);
+matrix* reluPrime(matrix* m);
 
 double tanh(double input);
-Matrix* tanhPrime(Matrix* m);
+matrix* tanhPrime(matrix* m);
 
 double logistic(double input);
-Matrix* logisticPrime(Matrix* m);
+matrix* logisticPrime(matrix* m);
 
 double leakeyRelu(double input);
-Matrix* leakeyReluPrime(Matrix* m);
+matrix* leakeyReluPrime(matrix* m);
 
-Matrix* softmax(Matrix* m);
+matrix* softmax(matrix* m);

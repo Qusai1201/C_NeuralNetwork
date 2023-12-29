@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 #define MAXCHAR 10000
 
 Img** csv_to_imgs(char* file_string, int number_of_imgs) {
@@ -53,4 +54,42 @@ void imgs_free(Img** imgs, int n) {
 	}
 	free(imgs);
 	imgs = NULL;
+}
+matrix *GetImage(bool * canvasColor ,int boxWidth, int boxHeight)
+{
+
+    matrix * img = matrix_create(28 , 28);
+    matrix_fill(img , 0);
+
+    Image blackAndWhiteImage = GenImageColor(boxWidth, boxHeight, BLACK);
+
+    for (int y = 0; y < boxHeight; ++y)
+    {
+        for (int x = 0; x < boxWidth; ++x)
+        {
+            if (canvasColor[y * boxWidth + x])
+                ((Color *)blackAndWhiteImage.data)[y * boxWidth + x] = WHITE;
+        }
+    }
+
+    ImageResize(&blackAndWhiteImage, 28, 28);
+
+    for (int i = 0; i < 28 * 28; ++i)
+    {
+        Color pixel = ((Color *)blackAndWhiteImage.data)[i];
+        unsigned char grayscaleValue = (pixel.r + pixel.g + pixel.b) / 3;
+        int row = i / 28;
+        int col = i % 28;
+        if (grayscaleValue)
+        {
+            ((Color *)blackAndWhiteImage.data)[i] = (Color){255, 255, 255, pixel.a};
+            img->entries[row][col] = 255;
+        }   
+        else
+        {
+            ((Color *)blackAndWhiteImage.data)[i] = (Color){grayscaleValue, grayscaleValue, grayscaleValue, pixel.a};
+        }
+    }
+    UnloadImage(blackAndWhiteImage);
+    return img;
 }

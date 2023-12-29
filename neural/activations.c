@@ -22,8 +22,8 @@ double tanh(double input) {
     return tanh(input);
 }
 
-Matrix* logisticPrime(Matrix* m) {
-    Matrix* mat = matrix_create(m->rows, m->cols);
+matrix* logisticPrime(matrix* m) {
+    matrix* mat = matrix_create(m->rows, m->cols);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             mat->entries[i][j] = logistic(m->entries[i][j]);
@@ -32,8 +32,8 @@ Matrix* logisticPrime(Matrix* m) {
     return mat;
 }
 
-Matrix* tanhPrime(Matrix* m) {
-    Matrix* mat = matrix_create(m->rows, m->cols);
+matrix* tanhPrime(matrix* m) {
+    matrix* mat = matrix_create(m->rows, m->cols);
     for (int i = 0; i < m->rows; i++) {
         for (int j = 0; j < m->cols; j++) {
             mat->entries[i][j] = tanh(m->entries[i][j]);
@@ -42,9 +42,9 @@ Matrix* tanhPrime(Matrix* m) {
     return mat;
 }
 
-Matrix* leakeyReluPrime(Matrix* m)
+matrix* leakeyReluPrime(matrix* m)
 {
-	Matrix *mat = matrix_create(m->rows, m->cols);
+	matrix *mat = matrix_create(m->rows, m->cols);
 	for (int i = 0; i < m->rows; i++)
 	{
 		for (int j = 0; j < m->cols; j++)
@@ -56,20 +56,20 @@ Matrix* leakeyReluPrime(Matrix* m)
 }
 
 
-Matrix *sigmoidPrime(Matrix *m)
+matrix *sigmoidPrime(matrix *m)
 {
-	Matrix *ones = matrix_create(m->rows, m->cols);
+	matrix *ones = matrix_create(m->rows, m->cols);
 	matrix_fill(ones, 1);
-	Matrix *subtracted = subtract(ones, m);
-	Matrix *multiplied = multiply(m, subtracted);
+	matrix *subtracted = subtract(ones, m);
+	matrix *multiplied = multiply(m, subtracted);
 	matrix_free(ones);
 	matrix_free(subtracted);
 	return multiplied;
 }
 
-Matrix *reluPrime(Matrix *m)
+matrix *reluPrime(matrix *m)
 {
-	Matrix *mat = matrix_create(m->rows, m->cols);
+	matrix *mat = matrix_create(m->rows, m->cols);
 	for (int i = 0; i < m->rows; i++)
 	{
 		for (int j = 0; j < m->cols; j++)
@@ -80,7 +80,7 @@ Matrix *reluPrime(Matrix *m)
 	return mat;
 }
 
-Matrix *softmax(Matrix *m)
+matrix *softmax(matrix *m)
 {
 	double total = 0;
 	for (int i = 0; i < m->rows; i++)
@@ -90,7 +90,7 @@ Matrix *softmax(Matrix *m)
 			total += exp(m->entries[i][j]);
 		}
 	}
-	Matrix *mat = matrix_create(m->rows, m->cols);
+	matrix *mat = matrix_create(m->rows, m->cols);
 	for (int i = 0; i < mat->rows; i++)
 	{
 		for (int j = 0; j < mat->cols; j++)

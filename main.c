@@ -1,45 +1,74 @@
-#include <math.h>
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "util/img.h"
+#include "graphics/graphics.h"
 #include "neural/activations.h"
 #include "neural/nn.h"
-#include "matrix/matrix.h"
-#include "matrix/ops.h"
 
-#define number_train_imgs 60000
-#define number_test_imgs 10000
-#define LR 0.01
-
-void train_test()
+int main(void)
 {
-	
-	Img **imgs = csv_to_imgs("./data/mnist_train.csv", number_train_imgs);
-	NeuralNetwork *net = network_create(784, 300, 10, LR);
-	network_train_batch_imgs(net, imgs, number_train_imgs ,sigmoidPrime, sigmoid);
+    NeuralNetwork *net = network_load("model2");
+    int PredictedNumber = -1;
 
-	Img **test_imgs = csv_to_imgs("data/mnist_test.csv", number_test_imgs);
+    InitWindow(screenWidth, screenHeight, "Raylib Canvas Drawing");
 
-	double score = network_predict_imgs(net, test_imgs, number_test_imgs, sigmoid);
+    SetTargetFPS(60);
 
-	printf("Score: %1.5f\n", score);
+    bool canvasColor[boxWidth * boxHeight];
+    memset(canvasColor, false, sizeof(canvasColor));
 
-	imgs_free(imgs, number_train_imgs);
-	imgs_free(test_imgs, number_test_imgs);
-	
-	network_free(net);
-}
+    Rectangle clearButtonRec = {(float)(screenWidth - 100) / 2, (float)(screenHeight - 40) / 2, 100, 40};
+    Rectangle predictButtonRec = {(float)(screenWidth + 50) / 2, (float)(screenHeight - 40) / 2, 100, 40};
 
-int main()
-{
-    srand(time(NULL));
-	Img **test_imgs = csv_to_imgs("data/mnist_test.csv", number_test_imgs);
-	for (size_t i = 0; i < number_test_imgs; i++)
-	{
-		img_print(test_imgs[i]);
-	}
-	
+
+    bool clearButtonPressed = false;
+    bool predictButtonPressed = false;
+
+    int pointsX[MAX_POINTS];
+    int pointsY[MAX_POINTS];
+    int pointsCount = 0;
+
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+
+        ClearBackground(BLACK);
+
+        DrawRectangleLines(boxX - 1, boxY - 1, boxWidth + 2, boxHeight + 2, RED);
+
+        UpdateCanvasAndPoints(pointsX ,pointsY ,canvasColor , &pointsCount);
+
+        ButtonsDraw(clearButtonRec ,predictButtonRec);
+
+        LinesDraw(pointsX ,pointsY ,canvasColor , &pointsCount);
+
+       
+        clearButtonPressed = IsClearButtonPressed(clearButtonRec);
+        predictButtonPressed = IsPredictButtonPressed(predictButtonRec);
+
+        if (clearButtonPressed)
+        {
+            memset(canvasColor, false, sizeof(canvasColor));
+            pointsCount = 0;
+            PredictedNumber = -1;
+        }
+
+        if (predictButtonPressed)
+        {
+            matrix * img = GetImage(canvasColor , boxWidth , boxHeight);
+            matrix* img_data = matrix_flatten(img, 0);
+
+            matrix * pred = network_predict(net , img_data , leakeyRelu);
+            PredictedNumber = matrix_argmax(pred);
+        }
+
+        DrawPrediction(PredictedNumber);
+
+
+        clearButtonPressed = false;
+        predictButtonPressed = false;
+
+        EndDrawing();
+    }
+
+    CloseWindow();
 
     return 0;
 }
