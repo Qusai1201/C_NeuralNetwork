@@ -14,8 +14,8 @@ int main(void)
     bool canvasColor[boxWidth * boxHeight];
     memset(canvasColor, false, sizeof(canvasColor));
 
-    Rectangle clearButtonRec = {(float)(screenWidth - 100) / 2, (float)(screenHeight - 40) / 2, 100, 40};
-    Rectangle predictButtonRec = {(float)(screenWidth + 50) / 2, (float)(screenHeight - 40) / 2, 100, 40};
+    Rectangle clearButtonRec = {200 , 20 , 100, 40};
+    Rectangle predictButtonRec = {500 , 20 , 100, 40};
 
 
     bool clearButtonPressed = false;
@@ -31,7 +31,7 @@ int main(void)
 
         ClearBackground(BLACK);
 
-        DrawRectangleLines(boxX - 1, boxY - 1, boxWidth + 2, boxHeight + 2, RED);
+        DrawRectangleLines(boxX - 1, boxY - 1, boxWidth + 2, boxHeight + 2, WHITE);
 
         UpdateCanvasAndPoints(pointsX ,pointsY ,canvasColor , &pointsCount);
 

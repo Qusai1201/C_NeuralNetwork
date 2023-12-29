@@ -12,7 +12,7 @@ void DrawPrediction(int PredictedNumber)
         char buffer[20];
         sprintf(buffer, "Predicted Number: %d", PredictedNumber);
 
-        DrawText(buffer, textPosX, 500, 20, RED);
+        DrawText(buffer, textPosX, 500, 20, WHITE);
     }
     else
     {
@@ -22,16 +22,16 @@ void DrawPrediction(int PredictedNumber)
 
         const int textPosX = (screenWidth - textWidth) / 2;
 
-        DrawText(text, textPosX, 500, 20, RED);
+        DrawText(text, textPosX, 500, 20, WHITE);
     }
 }
 void ButtonsDraw(Rectangle clearButtonRec , Rectangle predictButtonRec)
 {
 
-    DrawRectangleRounded(clearButtonRec, 5.f, 1, RED);
+    DrawRectangleRounded(clearButtonRec, 5.f, 1, WHITE);
     DrawText("Clear", clearButtonRec.x + (clearButtonRec.width - MeasureText("Clear", 26)) / 2, clearButtonRec.y + (clearButtonRec.height - 26) / 2, 26, BLACK);
 
-    DrawRectangleRounded(predictButtonRec, 5.f, 1, RED);
+    DrawRectangleRounded(predictButtonRec, 5.f, 1, WHITE);
     DrawText("Predict", predictButtonRec.x + (predictButtonRec.width - MeasureText("Predict", 26)) / 2, predictButtonRec.y + (predictButtonRec.height - 26) / 2, 26, BLACK);
 }
 void LinesDraw(int * pointsX , int * pointsY , bool * canvasColor , int * pointsCount)
