@@ -22,7 +22,5 @@
 void DrawPrediction(int PredictedNumber);
 void ButtonsDraw(Rectangle clearButtonRec , Rectangle predictButtonRec);
 void ButtonsDraw(Rectangle clearButtonRec , Rectangle predictButtonRec);
-void LinesDraw(int * pointsX , int * pointsY , bool * canvasColor , int * pointsCount);
-void UpdateCanvasAndPoints(int * pointsX , int * pointsY , bool * canvasColor , int * pointsCount);
 bool IsClearButtonPressed(Rectangle clearButtonRec);
 bool IsPredictButtonPressed(Rectangle predictButtonRec);

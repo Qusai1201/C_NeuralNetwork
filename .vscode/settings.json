@@ -4,6 +4,8 @@
         "stdio.h": "c",
         "img.h": "c",
         "raylib.h": "c",
-        "activations.h": "c"
+        "activations.h": "c",
+        "stdlib.h": "c",
+        "ops.h": "c"
     }
 }
