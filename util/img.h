@@ -1,6 +1,7 @@
 #pragma once
-#include <raylib.h>
+
 #include "../matrix/matrix.h"
+#include "raylib.h"
 
 typedef struct {
 	matrix* img_data;

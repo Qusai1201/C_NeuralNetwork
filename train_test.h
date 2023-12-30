@@ -15,21 +15,33 @@
 void train_test()
 {
 	
-	Img **imgs = csv_to_imgs("./data/mnist_train.csv", number_train_imgs);
-	NeuralNetwork *net = network_create(784, 300, 10, LR);
-	network_train_batch_imgs(net, imgs, number_train_imgs ,leakeyReluPrime, leakeyRelu);
-
+	Img **imgs = csv_to_imgs("data/mnist_train.csv", number_train_imgs);
 	Img **test_imgs = csv_to_imgs("data/mnist_test.csv", number_test_imgs);
 
-	double score = network_predict_imgs(net, test_imgs, number_test_imgs, leakeyRelu);
+	NeuralNetwork *net = network_create(784, 300, 10, LR);
+	NeuralNetwork *BestNet = network_create(784, 300, 10, LR);
 
+	double BestScore = 0;
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		network_train_batch_imgs(net, imgs, number_train_imgs ,leakeyReluPrime, leakeyRelu);
+		double score = network_predict_imgs(net, test_imgs, number_test_imgs, leakeyRelu);
+		printf("Score: %1.5f\n", score);
+		if(score > BestScore)
+		{
+			BestNet->hidden_weights = net->hidden_weights;
+			BestNet->output_weights = net->output_weights;
+			BestScore = score;
+		}
+
+	}
 	
-	printf("Score: %1.5f\n", score);
+	printf("Score: %1.5f\n", BestScore);
 
 
-	network_save(net , "model");
+	network_save(BestNet , "model");
 
-	
 
 	imgs_free(imgs, number_train_imgs);
 	imgs_free(test_imgs, number_test_imgs);

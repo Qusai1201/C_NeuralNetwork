@@ -1,6 +1,7 @@
 #include "graphics/graphics.h"
 #include "neural/activations.h"
 #include "neural/nn.h"
+#include "train_test.h"
 int main(void) {
 
     NeuralNetwork *net = network_load("model2");
@@ -66,6 +67,7 @@ int main(void) {
             SetTextureFilter(target.texture, 1);
 
             ClearBackground(BLACK);
+            PredictedNumber = -1;
 
         }
 

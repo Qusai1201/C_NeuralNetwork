@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #define MAXCHAR 10000
 
 Img** csv_to_imgs(char* file_string, int number_of_imgs) {
